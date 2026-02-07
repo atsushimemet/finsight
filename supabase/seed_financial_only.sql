@@ -1,43 +1,6 @@
--- MVP用: サンプル案件（GUEST_USER_ID = 00000000-0000-0000-0000-000000000001）
-INSERT INTO public.loan_applications (
-  user_id,
-  company_name,
-  industry,
-  loan_amount,
-  loan_period,
-  status,
-  risk_level
-) VALUES
-  (
-    '00000000-0000-0000-0000-000000000001',
-    '株式会社サンプル製造',
-    '製造業',
-    5000,
-    60,
-    'draft',
-    'medium'
-  ),
-  (
-    '00000000-0000-0000-0000-000000000001',
-    '有限会社グリーン食品',
-    '卸売業・小売業',
-    3000,
-    36,
-    'analyzing',
-    'low'
-  ),
-  (
-    '00000000-0000-0000-0000-000000000001',
-    '山田建設株式会社',
-    '建設業',
-    10000,
-    84,
-    'completed',
-    'high'
-  )
-;
+-- 既存のサンプル案件に財務指標だけ投入する場合に SQL Editor で実行
+-- 案件名が一致する 1 件ずつに 1 レコード入ります（既に存在する場合はスキップ）
 
--- サンプル案件用の財務指標（仕様書: ROE, ROA, 営業利益率, 流動比率, 自己資本比率 と業界平均）
 INSERT INTO public.financial_metrics (
   loan_application_id,
   revenue,
@@ -61,28 +24,8 @@ INSERT INTO public.financial_metrics (
   industry_avg_operating_margin,
   industry_avg_equity_ratio
 )
-SELECT
-  id,
-  500000000,
-  25000000,
-  19600000,
-  700000000,
-  455000000,
-  245000000,
-  240000000,
-  200000000,
-  8.0,
-  2.8,
-  120.0,
-  185.7,
-  5.0,
-  35.0,
-  0.71,
-  6.0,
-  3.0,
-  110.0,
-  4.0,
-  30.0
+SELECT id, 500000000, 25000000, 19600000, 700000000, 455000000, 245000000, 240000000, 200000000,
+  8.0, 2.8, 120.0, 185.7, 5.0, 35.0, 0.71, 6.0, 3.0, 110.0, 4.0, 30.0
 FROM public.loan_applications WHERE company_name = '株式会社サンプル製造' LIMIT 1
 ON CONFLICT (loan_application_id) DO NOTHING;
 
@@ -109,28 +52,8 @@ INSERT INTO public.financial_metrics (
   industry_avg_operating_margin,
   industry_avg_equity_ratio
 )
-SELECT
-  id,
-  300000000,
-  24000000,
-  18000000,
-  300000000,
-  135000000,
-  165000000,
-  150000000,
-  100000000,
-  10.9,
-  6.0,
-  150.0,
-  81.8,
-  8.0,
-  55.0,
-  1.0,
-  8.0,
-  4.0,
-  120.0,
-  5.0,
-  35.0
+SELECT id, 300000000, 24000000, 18000000, 300000000, 135000000, 165000000, 150000000, 100000000,
+  10.9, 6.0, 150.0, 81.8, 8.0, 55.0, 1.0, 8.0, 4.0, 120.0, 5.0, 35.0
 FROM public.loan_applications WHERE company_name = '有限会社グリーン食品' LIMIT 1
 ON CONFLICT (loan_application_id) DO NOTHING;
 
@@ -157,27 +80,7 @@ INSERT INTO public.financial_metrics (
   industry_avg_operating_margin,
   industry_avg_equity_ratio
 )
-SELECT
-  id,
-  1200000000,
-  12000000,
-  8000000,
-  1000000000,
-  920000000,
-  80000000,
-  340000000,
-  400000000,
-  10.0,
-  0.8,
-  85.0,
-  1150.0,
-  1.0,
-  8.0,
-  1.2,
-  7.0,
-  3.5,
-  115.0,
-  4.0,
-  32.0
+SELECT id, 1200000000, 12000000, 8000000, 1000000000, 920000000, 80000000, 340000000, 400000000,
+  10.0, 0.8, 85.0, 1150.0, 1.0, 8.0, 1.2, 7.0, 3.5, 115.0, 4.0, 32.0
 FROM public.loan_applications WHERE company_name = '山田建設株式会社' LIMIT 1
 ON CONFLICT (loan_application_id) DO NOTHING;
