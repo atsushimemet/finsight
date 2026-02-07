@@ -7,6 +7,7 @@ import type {
   FinancialStatement,
   LoanApplication,
 } from "@/types/database";
+import { estimateMonthlyOperatingCashFlow } from "@/lib/finance";
 
 type ScenarioId =
   | "base"
@@ -129,38 +130,6 @@ const currencyFormatter = new Intl.NumberFormat("ja-JP", {
 
 function formatCurrency(value: number) {
   return currencyFormatter.format(Math.round(value));
-}
-
-function calcAverageOperatingCashFlow(
-  statements: FinancialStatement[],
-  metrics: FinancialMetrics | null,
-  application: LoanApplication
-) {
-  const statementValues = statements
-    .map((s) => s.operating_cash_flow)
-    .filter((v): v is number => typeof v === "number");
-  if (statementValues.length > 0) {
-    const avgAnnual =
-      statementValues.reduce((sum, value) => sum + value, 0) /
-      statementValues.length;
-    return avgAnnual / 12;
-  }
-
-  if (metrics?.operating_profit != null) {
-    return metrics.operating_profit / 12;
-  }
-
-  if (metrics?.net_income != null) {
-    return metrics.net_income / 12;
-  }
-
-  if (metrics?.revenue != null && metrics?.operating_margin != null) {
-    const marginRatio = metrics.operating_margin / 100;
-    return (metrics.revenue * marginRatio) / 12;
-  }
-
-  const fallbackAnnual = Math.max(application.loan_amount * 0.25, 6_000_000);
-  return fallbackAnnual / 12;
 }
 
 function adjustOperatingCashFlow(
@@ -432,7 +401,7 @@ export function CashFlowSimulation({
   const [activeScenarioId, setActiveScenarioId] = useState<ScenarioId>("base");
 
   const baseMonthlyOperatingCF = useMemo(
-    () => calcAverageOperatingCashFlow(statements, metrics, application),
+    () => estimateMonthlyOperatingCashFlow(statements, metrics, application),
     [statements, metrics, application]
   );
 

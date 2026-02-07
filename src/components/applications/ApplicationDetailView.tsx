@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { FinancialAnalysisSection } from "./FinancialAnalysisSection";
 import { CashFlowSimulation } from "./CashFlowSimulation";
+import { ProposalDraftSection } from "./ProposalDraftSection";
 import type { LoanApplication, FinancialMetrics, FinancialStatement } from "@/types/database";
 
 const statusLabels: Record<string, string> = {
@@ -13,7 +14,7 @@ const statusLabels: Record<string, string> = {
   rejected: "却下",
 };
 
-type TabId = "overview" | "financial" | "simulation";
+type TabId = "overview" | "financial" | "simulation" | "proposal";
 
 interface ApplicationDetailViewProps {
   application: LoanApplication;
@@ -32,6 +33,7 @@ export function ApplicationDetailView({
     { id: "overview", label: "概要" },
     { id: "financial", label: "財務分析" },
     { id: "simulation", label: "シミュレーション" },
+    { id: "proposal", label: "稟議書" },
   ];
 
   return (
@@ -117,6 +119,14 @@ export function ApplicationDetailView({
 
         {activeTab === "simulation" && (
           <CashFlowSimulation
+            application={application}
+            metrics={metrics}
+            statements={statements}
+          />
+        )}
+
+        {activeTab === "proposal" && (
+          <ProposalDraftSection
             application={application}
             metrics={metrics}
             statements={statements}
