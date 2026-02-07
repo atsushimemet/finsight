@@ -251,10 +251,18 @@ function simulateLoan(params: {
   };
 }
 
+interface ChartSeries {
+  id: string;
+  label: string;
+  color: string;
+  values: number[];
+  dashed?: boolean;
+}
+
 function CashFlowChart({
   series,
 }: {
-  series: { id: string; label: string; color: string; values: number[] }[];
+  series: ChartSeries[];
 }) {
   if (series.length === 0 || series.every((line) => line.values.length === 0)) {
     return (
@@ -344,6 +352,7 @@ function CashFlowChart({
             fill="none"
             stroke={line.color}
             strokeWidth={2.5}
+            strokeDasharray={line.dashed ? "6 4" : undefined}
           />
         ))}
 
@@ -451,7 +460,7 @@ export function CashFlowSimulation({
   const activeResult = scenarioResults[activeScenario.id];
   const baseResult = scenarioResults.base;
 
-  const chartSeries = [
+  const chartSeries: ChartSeries[] = [
     {
       id: "base",
       label: "ベースケース",
@@ -465,6 +474,17 @@ export function CashFlowSimulation({
       label: activeScenario.label,
       color: activeScenario.color,
       values: activeResult?.schedule.map((point) => point.netCashFlow) ?? [],
+    });
+  }
+
+  if (activeResult) {
+    const paymentValues = Array.from({ length: activeResult.schedule.length }, () => -activeResult.monthlyPayment);
+    chartSeries.push({
+      id: "monthly-payment",
+      label: `${activeScenario.label}の月次返済額`,
+      color: "#475569",
+      values: paymentValues,
+      dashed: true,
     });
   }
 
@@ -609,7 +629,7 @@ export function CashFlowSimulation({
               ベースケースと選択したリスクシナリオを比較しています。
             </p>
           </div>
-          <div className="flex flex-wrap gap-2 text-xs">
+          <div className="flex flex-wrap gap-3 text-xs">
             <span className="flex items-center gap-1 text-slate-600">
               <span className="h-2 w-2 rounded-full" style={{ backgroundColor: SCENARIOS[0].color }} />
               ベースケース
@@ -620,6 +640,10 @@ export function CashFlowSimulation({
                 {activeScenario.label}
               </span>
             )}
+            <span className="flex items-center gap-1 text-slate-600">
+              <span className="h-2 w-4 border-t-2 border-dashed border-slate-500" />
+              月次返済額（支出）
+            </span>
           </div>
         </div>
         <div className="mt-4">
