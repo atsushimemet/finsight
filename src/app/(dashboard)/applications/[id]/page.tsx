@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
-import { redirect, notFound } from "next/navigation";
+import { GUEST_USER_ID } from "@/lib/constants";
+import { notFound } from "next/navigation";
 import Link from "next/link";
 
 const statusLabels: Record<string, string> = {
@@ -20,16 +21,13 @@ export default async function ApplicationDetailPage({
   const {
     data: { user },
   } = await supabase.auth.getUser();
-
-  if (!user) {
-    redirect("/");
-  }
+  const userId = user?.id ?? GUEST_USER_ID;
 
   const { data: application, error } = await supabase
     .from("loan_applications")
     .select("*")
     .eq("id", id)
-    .eq("user_id", user.id)
+    .eq("user_id", userId)
     .single();
 
   if (error || !application) {

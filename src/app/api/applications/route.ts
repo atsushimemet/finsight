@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { GUEST_USER_ID } from "@/lib/constants";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
@@ -6,10 +7,7 @@ export async function POST(request: Request) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-
-  if (!user) {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-  }
+  const userId = user?.id ?? GUEST_USER_ID;
 
   const body = await request.json();
   const {
@@ -31,7 +29,7 @@ export async function POST(request: Request) {
   const { data, error } = await supabase
     .from("loan_applications")
     .insert({
-      user_id: user.id,
+      user_id: userId,
       company_name,
       industry: industry ?? null,
       loan_amount: Number(loan_amount),

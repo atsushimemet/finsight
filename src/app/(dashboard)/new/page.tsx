@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
+import { GUEST_USER_ID } from "@/lib/constants";
 import { NewApplicationForm } from "@/components/dashboard/NewApplicationForm";
 
 export default async function NewApplicationPage() {
@@ -7,15 +7,12 @@ export default async function NewApplicationPage() {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-
-  if (!user) {
-    redirect("/");
-  }
+  const userId = user?.id ?? GUEST_USER_ID;
 
   return (
     <div className="mx-auto max-w-2xl p-8">
       <h1 className="mb-6 text-2xl font-bold text-slate-900">新規案件作成</h1>
-      <NewApplicationForm userId={user.id} />
+      <NewApplicationForm userId={userId} />
     </div>
   );
 }

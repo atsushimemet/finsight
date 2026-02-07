@@ -5,9 +5,8 @@ import type { LoanApplication } from "@/types/database";
 
 interface DashboardProps {
   applications: LoanApplication[];
-  isLoggedIn: boolean;
 }
 
-export function Dashboard({ applications, isLoggedIn }: DashboardProps) {
-  return <DashboardContent applications={applications} isLoggedIn={isLoggedIn} />;
+export function Dashboard({ applications }: DashboardProps) {
+  return <DashboardContent applications={applications} />;
 }
