@@ -88,6 +88,26 @@ supabase/migrations/    # DB マイグレーション
 - Next.js は Vercel 等にデプロイ可能。
 - Supabase は本番プロジェクトでマイグレーションを実行し、RLS ポリシーでユーザーごとのアクセス制御を有効にしてください。
 
+## デプロイ手順（Vercel + Supabase）
+
+1. **Supabase プロジェクト作成**
+   - Supabase ダッシュボードで本番用 Project を作成し、`NEXT_PUBLIC_SUPABASE_URL` と `NEXT_PUBLIC_SUPABASE_ANON_KEY` を控える。
+   - SQL Editor でマイグレーションを順番に実行:
+     1. `supabase/migrations/20260207000000_create_loan_applications.sql`
+     2. `supabase/migrations/20260207100000_mvp_anon_loan_applications.sql`
+     3. `supabase/migrations/20260207200000_financial_analysis.sql`
+     4. 追加の適用が必要な場合のみ `supabase/migrations/run_financial_analysis_manually.sql`
+   - 初期データが必要なら `supabase/seed.sql`（案件＋財務データ）または `supabase/seed_financial_only.sql` を実行。
+2. **環境変数設定**
+   - Vercel の Project Settings → Environment Variables に `NEXT_PUBLIC_SUPABASE_URL`、`NEXT_PUBLIC_SUPABASE_ANON_KEY`（必要なら `SUPABASE_SERVICE_ROLE_KEY`）を Production/Preview/Development へ登録。
+   - ローカルで本番値を確認したい場合は `vercel env pull` で `.env.production.local` を取得。
+3. **Vercel へデプロイ**
+   - Vercel で New Project → GitHub リポジトリを選択し、Framework=Next.js、Build Command=`npm run build` のままインポート。
+   - Production Branch を `main` に設定し Deploy。以降は `main` への push で自動デプロイ。
+4. **動作確認**
+   - デプロイ後、`https://<project>.vercel.app` でアプリを確認し、Supabase Studio でテーブル更新が反映されているかチェック。
+   - Vercel Logs / Supabase Logs を監視し、エラーがないかモニタリング。
+
 ## 仕様書
 
 詳細はルートの `Finsight 本開発仕様書.md` を参照してください。
