@@ -54,7 +54,7 @@ export function NewApplicationForm({ userId: _userId }: NewApplicationFormProps)
   }
 
   return (
-    <form onSubmit={onSubmit} className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+    <form onSubmit={onSubmit} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
       {error && (
         <div className="mb-4 rounded-lg bg-red-50 px-4 py-2 text-sm text-red-700">
           {error}
@@ -111,17 +111,17 @@ export function NewApplicationForm({ userId: _userId }: NewApplicationFormProps)
           />
         </div>
       </div>
-      <div className="mt-6 flex gap-3">
+      <div className="mt-6 flex flex-col gap-3 sm:flex-row">
         <button
           type="submit"
           disabled={loading}
-          className="rounded-lg bg-[#2563eb] px-4 py-2 text-sm font-medium text-white hover:bg-[#1d4ed8] disabled:opacity-50"
+          className="w-full rounded-lg bg-[#2563eb] px-4 py-2 text-sm font-medium text-white hover:bg-[#1d4ed8] disabled:opacity-50 sm:w-auto"
         >
           {loading ? "作成中…" : "作成する"}
         </button>
         <a
           href="/"
-          className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+          className="w-full rounded-lg border border-slate-300 px-4 py-2 text-center text-sm font-medium text-slate-700 hover:bg-slate-50 sm:w-auto"
         >
           キャンセル
         </a>

@@ -470,7 +470,7 @@ export function CashFlowSimulation({
   return (
     <div className="space-y-6">
       <div className="grid gap-6 lg:grid-cols-2">
-        <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
           <h3 className="text-base font-semibold text-slate-900">シミュレーション条件</h3>
           <dl className="mt-4 space-y-3 text-sm">
             <div>
@@ -545,7 +545,7 @@ export function CashFlowSimulation({
           </form>
         </div>
 
-        <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
           <h3 className="text-base font-semibold text-slate-900">結果サマリー</h3>
           <div
             className={`mt-4 rounded-lg px-4 py-3 text-sm ${
@@ -556,7 +556,7 @@ export function CashFlowSimulation({
           >
             {evaluationMessage}
           </div>
-          <dl className="mt-4 grid grid-cols-2 gap-4 text-sm">
+          <dl className="mt-4 grid grid-cols-1 gap-4 text-sm sm:grid-cols-2">
             <div>
               <dt className="text-slate-500">月次返済額</dt>
               <dd className="font-mono text-slate-900">
@@ -590,7 +590,7 @@ export function CashFlowSimulation({
         </div>
       </div>
 
-      <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+      <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
         <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
           <div>
             <h3 className="text-base font-semibold text-slate-900">キャッシュフロー推移</h3>
@@ -620,7 +620,7 @@ export function CashFlowSimulation({
         </div>
       </div>
 
-      <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+      <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
         <h3 className="text-base font-semibold text-slate-900">リスクシナリオ</h3>
         <p className="mt-1 text-sm text-slate-500">
           比較したいシナリオを選択すると、グラフとサマリーが更新されます。
