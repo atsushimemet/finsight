@@ -55,9 +55,9 @@ export function ApplicationCard({ application }: ApplicationCardProps) {
   return (
     <Link
       href={`/applications/${application.id}`}
-      className="block rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md no-underline text-slate-900"
+      className="block rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md no-underline text-slate-900 sm:p-5"
     >
-      <div className="flex items-start justify-between gap-3">
+      <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="min-w-0 flex-1">
           <h3 className="truncate font-semibold text-slate-900">
             {application.company_name}
@@ -66,7 +66,7 @@ export function ApplicationCard({ application }: ApplicationCardProps) {
             <p className="mt-0.5 text-sm text-slate-500">{application.industry}</p>
           )}
         </div>
-        <div className="shrink-0 flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm">
           <span
             className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${statusColors[application.status]}`}
           >
@@ -77,7 +77,7 @@ export function ApplicationCard({ application }: ApplicationCardProps) {
           </span>
         </div>
       </div>
-      <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
+      <dl className="mt-4 grid grid-cols-1 gap-3 text-sm sm:grid-cols-2 sm:gap-x-4">
         <div>
           <dt className="text-slate-500">融資希望額</dt>
           <dd className="font-mono font-medium text-slate-900">

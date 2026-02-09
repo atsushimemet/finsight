@@ -2,17 +2,17 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { dashboardNavItems } from "./navItems";
 
-const navItems = [
-  { href: "/", label: "案件一覧" },
-  { href: "/new", label: "新規案件作成" },
-];
+interface SidebarProps {
+  className?: string;
+}
 
-export function Sidebar() {
+export function Sidebar({ className = "" }: SidebarProps = {}) {
   const pathname = usePathname();
 
   return (
-    <aside className="w-56 shrink-0 border-r border-slate-200 bg-slate-50/80">
+    <aside className={`w-56 shrink-0 border-r border-slate-200 bg-slate-50/80 ${className}`}>
       <div className="flex h-full flex-col p-4">
         <Link
           href="/"
@@ -21,7 +21,7 @@ export function Sidebar() {
           <span className="text-primary-600 text-xl">Finsight</span>
         </Link>
         <nav className="flex flex-col gap-1">
-          {navItems.map(({ href, label }) => {
+          {dashboardNavItems.map(({ href, label }) => {
             const isActive = pathname === href || (href !== "/" && pathname.startsWith(href));
             return (
               <Link

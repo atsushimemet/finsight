@@ -41,8 +41,8 @@ export default async function ApplicationDetailPage({
     .order("fiscal_year", { ascending: false });
 
   return (
-    <div className="mx-auto max-w-3xl p-8">
-      <div className="mb-6">
+    <div className="mx-auto w-full max-w-3xl px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
+      <div className="mb-4 sm:mb-6">
         <Link
           href="/"
           className="text-sm font-medium text-[#2563eb] hover:underline"

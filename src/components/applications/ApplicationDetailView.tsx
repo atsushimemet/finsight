@@ -38,7 +38,7 @@ export function ApplicationDetailView({
 
   return (
     <div className="rounded-xl border border-slate-200 bg-white shadow-sm">
-      <div className="border-b border-slate-200 px-6 pt-6">
+      <div className="border-b border-slate-200 px-4 py-4 sm:px-6 sm:pt-6 sm:pb-4">
         <h1 className="text-2xl font-bold text-slate-900">
           {application.company_name}
         </h1>
@@ -60,28 +60,30 @@ export function ApplicationDetailView({
             </span>
           )}
         </div>
-        <nav className="mt-6 flex gap-4 border-b border-slate-200">
-          {tabs.map(({ id, label }) => (
-            <button
-              key={id}
-              type="button"
-              onClick={() => setActiveTab(id)}
-              className={`border-b-2 pb-2 text-sm font-medium transition-colors ${
-                activeTab === id
-                  ? "border-[#2563eb] text-[#2563eb]"
-                  : "border-transparent text-slate-600 hover:text-slate-900"
-              }`}
-            >
-              {label}
-            </button>
-          ))}
-        </nav>
+        <div className="mt-6 overflow-x-auto">
+          <nav className="flex min-w-max gap-4 border-b border-slate-200">
+            {tabs.map(({ id, label }) => (
+              <button
+                key={id}
+                type="button"
+                onClick={() => setActiveTab(id)}
+                className={`whitespace-nowrap border-b-2 pb-2 text-sm font-medium transition-colors ${
+                  activeTab === id
+                    ? "border-[#2563eb] text-[#2563eb]"
+                    : "border-transparent text-slate-600 hover:text-slate-900"
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </nav>
+        </div>
       </div>
 
-      <div className="p-6">
+      <div className="p-4 sm:p-6">
         {activeTab === "overview" && (
           <>
-            <dl className="grid gap-3 sm:grid-cols-2">
+            <dl className="grid gap-4 sm:grid-cols-2">
               <div>
                 <dt className="text-sm text-slate-500">融資希望額</dt>
                 <dd className="font-mono font-medium text-slate-900">

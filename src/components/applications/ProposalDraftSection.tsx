@@ -217,7 +217,7 @@ export function ProposalDraftSection({
 
   return (
     <div className="space-y-6">
-      <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+      <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
         <h3 className="text-base font-semibold text-slate-900">稟議書ドラフト生成（モック）</h3>
         <p className="mt-2 text-sm text-slate-500">
           ワンクリックでテンプレートを生成し、下部のエリアで内容を加筆修正できます。将来的にはLLM生成へ置き換える計画です。
@@ -259,8 +259,8 @@ export function ProposalDraftSection({
         </dl>
       </div>
 
-      <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-        <div className="flex items-center justify-between">
+      <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <h3 className="text-base font-semibold text-slate-900">ドラフト内容</h3>
           <span className="text-xs text-slate-500">自由に編集してメモを追記できます</span>
         </div>
